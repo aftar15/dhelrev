@@ -1,10 +1,21 @@
-<script setup>
+<script setup lang="ts">
 import { 
   UsersIcon, 
   BookOpenIcon, 
   AcademicCapIcon, 
   ChartBarIcon 
 } from '@heroicons/vue/24/outline';
+
+interface Props {
+  statistics: {
+    teacherCount: number;
+    studentCount: number;
+    classCount: number;
+    attendanceRate: number;
+  }
+}
+
+const props = defineProps<Props>();
 </script>
 
 <template>
@@ -15,7 +26,7 @@ import {
       </div>
       <div>
         <p class="text-gray-500 text-sm">Total Students</p>
-        <p class="text-2xl font-bold">-</p>
+        <p class="text-2xl font-bold">{{ statistics.studentCount }}</p>
       </div>
     </div>
     <div class="bg-white rounded-lg shadow-md p-6 flex items-center space-x-4 transition-transform duration-300 hover:scale-105">
@@ -24,7 +35,7 @@ import {
       </div>
       <div>
         <p class="text-gray-500 text-sm">Total Teachers</p>
-        <p class="text-2xl font-bold">-</p>
+        <p class="text-2xl font-bold">{{ statistics.teacherCount }}</p>
       </div>
     </div>
     <div class="bg-white rounded-lg shadow-md p-6 flex items-center space-x-4 transition-transform duration-300 hover:scale-105">
@@ -33,7 +44,7 @@ import {
       </div>
       <div>
         <p class="text-gray-500 text-sm">Total Classes</p>
-        <p class="text-2xl font-bold">-</p>
+        <p class="text-2xl font-bold">{{ statistics.classCount }}</p>
       </div>
     </div>
     <div class="bg-white rounded-lg shadow-md p-6 flex items-center space-x-4 transition-transform duration-300 hover:scale-105">
@@ -42,7 +53,7 @@ import {
       </div>
       <div>
         <p class="text-gray-500 text-sm">Attendance Rate</p>
-        <p class="text-2xl font-bold">-</p>
+        <p class="text-2xl font-bold">{{ statistics.attendanceRate }}%</p>
       </div>
     </div>
   </div>

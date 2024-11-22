@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { Head, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
@@ -12,9 +12,19 @@ import {
     BellAlertIcon
 } from '@heroicons/vue/24/outline';
 
+interface Props {
+    statistics: {
+        teacherCount: number;
+        studentCount: number;
+        classCount: number;
+        attendanceRate: number;
+    }
+}
+
+const props = defineProps<Props>();
 const activeTab = ref('overview');
 const searchQuery = ref('');
-const hasNotifications = ref(true); // This should come from your backend
+const hasNotifications = ref(true);
 
 const handleSearch = () => {
     console.log('Searching for:', searchQuery.value);
@@ -91,7 +101,7 @@ const handleLogout = () => {
 
             <!-- Overview Tab -->
             <div v-if="activeTab === 'overview'">
-                <StatisticsCards />
+                <StatisticsCards :statistics="statistics" />
                 <div class="mt-8">
                     <PerformanceChart />
                 </div>

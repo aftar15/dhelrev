@@ -1,16 +1,28 @@
-<script setup>
+<script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import TeacherModal from './TeacherModal.vue';
+import { MagnifyingGlassIcon } from '@heroicons/vue/24/outline';
+import type { Teacher } from '@/types/teacher';
 
-defineProps({
-    teachers: {
-        type: Array,
-        default: () => []
-    }
-});
+const props = defineProps<{
+    teachers: Teacher[];
+}>();
 
 const searchQuery = ref('');
+const showModal = ref(false);
+const editingTeacher = ref<Teacher | null>(null);
+
+const handleEdit = (teacher: Teacher) => {
+    editingTeacher.value = teacher;
+    showModal.value = true;
+};
+
+const closeModal = () => {
+    showModal.value = false;
+    editingTeacher.value = null;
+};
 </script>
 
 <template>
@@ -18,67 +30,77 @@ const searchQuery = ref('');
 
     <AuthenticatedLayout>
         <div class="min-h-screen bg-gray-100 p-6">
-            <div class="bg-white shadow-md rounded-lg p-4">
-                <div class="flex justify-between items-center mb-4">
-                    <h1 class="text-2xl font-bold">Teachers</h1>
-                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
-                        Add Teacher
-                    </button>
-                </div>
-                <div class="flex mb-4">
-                    <div class="relative flex-grow">
-                        <input
-                            v-model="searchQuery"
-                            type="text"
-                            placeholder="Search for a teacher by name or email"
-                            class="w-full px-4 py-2 pr-10 border rounded"
-                        />
-                        <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-                            </svg>
-                        </span>
-                    </div>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left">
-                        <thead>
-                            <tr class="bg-gray-200">
-                                <th class="p-2">Name</th>
-                                <th class="p-2">Department</th>
-                                <th class="p-2">Subject</th>
-                                <th class="p-2">Email address</th>
-                                <th class="p-2">Contact</th>
-                                <th class="p-2">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-if="teachers.length === 0">
-                                <td colspan="6" class="text-center p-4 text-gray-500">
-                                    No teachers found
-                                </td>
-                            </tr>
-                            <tr v-else v-for="teacher in teachers" 
-                                :key="teacher.email" 
-                                class="border-b hover:bg-gray-50">
-                                <td class="p-2">{{ teacher.name }}</td>
-                                <td class="p-2">{{ teacher.department }}</td>
-                                <td class="p-2">{{ teacher.subject }}</td>
-                                <td class="p-2">{{ teacher.email }}</td>
-                                <td class="p-2">{{ teacher.contact }}</td>
-                                <td class="p-2">
-                                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded mr-2">
-                                        Edit
-                                    </button>
-                                    <button class="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded">
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <!-- Header -->
+            <div class="mb-6 flex justify-between items-center">
+                <h1 class="text-2xl font-semibold text-gray-900">Teachers</h1>
+                <button
+                    @click="showModal = true"
+                    class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                >
+                    Add Teacher
+                </button>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="mb-6">
+                <div class="relative max-w-xl">
+                    <input
+                        v-model="searchQuery"
+                        type="text"
+                        placeholder="Search teachers..."
+                        class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300"
+                    />
+                    <MagnifyingGlassIcon 
+                        class="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400"
+                    />
                 </div>
             </div>
+
+            <!-- Teachers Table -->
+            <div class="bg-white rounded-lg shadow overflow-hidden">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Department</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Subject</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Contact</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <tr v-for="teacher in teachers" :key="teacher.id">
+                            <td class="px-6 py-4 whitespace-nowrap">{{ teacher.name }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ teacher.department }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ teacher.subject }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ teacher.email }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{ teacher.contact }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <button
+                                    @click="handleEdit(teacher)"
+                                    class="text-blue-600 hover:text-blue-900 mr-4"
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    @click="$inertia.delete(`/teachers/${teacher.id}`)"
+                                    class="text-red-600 hover:text-red-900"
+                                >
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Teacher Modal -->
+            <TeacherModal
+                v-if="showModal"
+                :teacher="editingTeacher"
+                @close="closeModal"
+            />
         </div>
     </AuthenticatedLayout>
 </template> 
