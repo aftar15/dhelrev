@@ -2,10 +2,6 @@
 import { Head, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import StatisticsCards from '@/Components/Dashboard/StatisticsCards.vue';
-import PerformanceChart from '@/Components/Dashboard/PerformanceChart.vue';
-import RecentActivities from '@/Components/Dashboard/RecentActivities.vue';
-import CalendarWidget from '@/Components/Dashboard/CalendarWidget.vue';
 import { 
     MagnifyingGlassIcon,
     BellIcon,
@@ -22,16 +18,11 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const activeTab = ref('overview');
 const searchQuery = ref('');
 const hasNotifications = ref(true);
 
-const handleSearch = () => {
-    console.log('Searching for:', searchQuery.value);
-};
-
 const handleLogout = () => {
-    router.post(route('logout'));
+    router.post('/logout');
 };
 </script>
 
@@ -39,9 +30,9 @@ const handleLogout = () => {
     <Head title="Dashboard" />
 
     <AuthenticatedLayout>
-        <div class="min-h-screen bg-gray-100 p-6">
+        <div class="min-h-screen bg-gray-100">
             <!-- Top Bar -->
-            <div class="mb-6 flex justify-between items-center">
+            <div class="mb-6 flex justify-between items-center p-6">
                 <!-- Search Bar -->
                 <div class="flex-1 max-w-xl relative">
                     <div class="relative">
@@ -50,7 +41,6 @@ const handleLogout = () => {
                             type="text"
                             placeholder="Search students, teachers, or classes..."
                             class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                            @keyup.enter="handleSearch"
                         />
                         <MagnifyingGlassIcon 
                             class="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400"
@@ -82,32 +72,95 @@ const handleLogout = () => {
                 </div>
             </div>
 
-            <!-- Navigation Tabs -->
-            <div class="bg-white shadow-md rounded-lg mb-6">
-                <div class="flex border-b">
-                    <button 
-                        @click="activeTab = 'overview'"
-                        :class="[
-                            'px-4 py-2 text-sm font-medium',
-                            activeTab === 'overview' 
-                                ? 'border-b-2 border-blue-500 text-blue-600'
-                                : 'text-gray-500 hover:text-gray-700'
-                        ]"
-                    >
-                        Overview
-                    </button>
-                </div>
-            </div>
+            <!-- Main Content -->
+            <div class="p-6">
+                <!-- Statistics Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500 text-sm">Total Students</p>
+                                <p class="text-2xl font-bold">{{ statistics.studentCount }}</p>
+                            </div>
+                            <div class="bg-blue-500 rounded-full p-3">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
 
-            <!-- Overview Tab -->
-            <div v-if="activeTab === 'overview'">
-                <StatisticsCards :statistics="statistics" />
-                <div class="mt-8">
-                    <PerformanceChart />
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500 text-sm">Total Teachers</p>
+                                <p class="text-2xl font-bold">{{ statistics.teacherCount }}</p>
+                            </div>
+                            <div class="bg-purple-500 rounded-full p-3">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2.5 2.5 0 00-2.5-2.5H14" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500 text-sm">Total Classes</p>
+                                <p class="text-2xl font-bold">{{ statistics.classCount }}</p>
+                            </div>
+                            <div class="bg-yellow-500 rounded-full p-3">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500 text-sm">Attendance Rate</p>
+                                <p class="text-2xl font-bold">{{ statistics.attendanceRate }}%</p>
+                            </div>
+                            <div class="bg-green-500 rounded-full p-3">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
-                    <RecentActivities />
-                    <CalendarWidget />
+
+                <!-- Quick Actions -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold mb-4">Add Students</h3>
+                        <p class="text-gray-600 mb-4">Add new students to the system and manage their information.</p>
+                        <a href="/students" class="text-blue-600 hover:text-blue-800">Manage Students →</a>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold mb-4">Add Teachers</h3>
+                        <p class="text-gray-600 mb-4">Add new teachers and manage their profiles and assignments.</p>
+                        <a href="/teachers" class="text-blue-600 hover:text-blue-800">Manage Teachers →</a>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold mb-4">Manage Classes</h3>
+                        <p class="text-gray-600 mb-4">Create and manage classes, sections, and schedules.</p>
+                        <a href="/classes" class="text-blue-600 hover:text-blue-800">Manage Classes →</a>
+                    </div>
+                </div>
+
+                <!-- Recent Activities -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-semibold mb-4">Recent Activities</h3>
+                    <div class="space-y-4">
+                        <!-- Add your recent activities here -->
+                        <p class="text-gray-600">No recent activities to display.</p>
+                    </div>
                 </div>
             </div>
         </div>
