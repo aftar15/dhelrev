@@ -1,0 +1,135 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>Document</title>
+</head>
+<body>
+    <main class="student-dashboard">
+        <div class="dashboard-container">
+          <aside class="sidebar-column">
+            <nav class="sidebar-user-dash">
+              <div class="sidebar-dashboard">
+                <img src="https://cdn.builder.io/api/v1/image/assets/d722985fb0864991959d993b9d3b339c/2e3893b437bce0855972a6aeb7b1776bcfabd7ffd2244c6bfcdb3c3dc3be8793?apiKey=d722985fb0864991959d993b9d3b339c&" alt="School Logo" class="school-logo" />
+                <h1 class="school-name">Surigao City NHS</h1>
+                <hr class="sidebar-divider" />
+                <ul class="sidebar-menu">
+                  <li class="menu-item">
+                    <div class="menu-item-content">
+                      <img src="https://cdn.builder.io/api/v1/image/assets/d722985fb0864991959d993b9d3b339c/981663693ee99d95d2d97ebcca2a3626ecfca9ec75a75558418b85566d44b5b6?apiKey=d722985fb0864991959d993b9d3b339c&" alt="" class="menu-icon" />
+                      <span class="menu-text">Dashboard</span>
+                    </div>
+                  </li>
+                  <li class="menu-item active-menu-item">
+                    <div class="menu-item-content">
+                      <img src="https://cdn.builder.io/api/v1/image/assets/d722985fb0864991959d993b9d3b339c/bd6dc81a29b706c3b8a887e05c65aa49a9eefc9699843f2212409bdcbfae7b3f?apiKey=d722985fb0864991959d993b9d3b339c&" alt="" class="menu-icon" />
+                      <span class="menu-text">Classes</span>
+                    </div>
+                  </li>
+                  
+                  <li class="menu-item">
+                    <div class="menu-item-content">
+                      <img src="https://cdn.builder.io/api/v1/image/assets/d722985fb0864991959d993b9d3b339c/10098ec182e23e73a87bc9c28601039ea469f9a4309aaae26fffce7941910803?apiKey=d722985fb0864991959d993b9d3b339c&" alt="" class="menu-icon" />
+                      <span class="menu-text">Grades</span>
+                    </div>
+                  </li>
+                  
+                  <li class="menu-item">
+                    <div class="menu-item-content">
+                      <img src="https://cdn.builder.io/api/v1/image/assets/d722985fb0864991959d993b9d3b339c/37fafee0586a69dbe5e856a222dd60a0b9b240d622a6668018fb33048891dd27?apiKey=d722985fb0864991959d993b9d3b339c&" alt="" class="menu-icon" />
+                      <span class="menu-text">Clearance</span>
+                    </div>
+                  </li>
+                  <li class="menu-item">
+                    <div class="menu-item-content">
+                      <img src="https://cdn.builder.io/api/v1/image/assets/d722985fb0864991959d993b9d3b339c/c57e34341e7e695795322b9b097f861472322a93bba51d65bc40cb20953eb2c5?apiKey=d722985fb0864991959d993b9d3b339c&" alt="" class="menu-icon" />
+                      <span class="menu-text">Profile</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </aside>
+          <section class="main-content-column">
+            <div class="main-content">
+              <header class="header-section">
+                <form class="search-input" role="search">
+                  <div class="search-addon">
+                    <div class="search-icon">
+                      <img src="https://cdn.builder.io/api/v1/image/assets/d722985fb0864991959d993b9d3b339c/db405670c15e114360bab1fcca861ed62031ea836267aa95d2aa3f595c62416f?apiKey=d722985fb0864991959d993b9d3b339c&" alt="" class="search-icon-img" />
+                    </div>
+                  </div>
+                  <label for="search-field" class="visually-hidden">Search</label>
+                  <input id="search-field" type="text" class="search-field" placeholder="Type here..." aria-label="Search" />
+                </form>
+                <a href="/Login/index.html">
+                    <img src="https://cdn.builder.io/api/v1/image/assets/d722985fb0864991959d993b9d3b339c/5ece292a3367a2ef8a1be3718a70b353918d2115625a7e637ab1aece15850b86?apiKey=d722985fb0864991959d993b9d3b339c&" alt="Notifications" class="notification-icon" />
+                    <button class="logout-button">Log out</button>
+                </a>
+                
+              </header>
+              <h2 class="page-title">Classes</h2>
+
+              <div class="filter-section">
+                <button class="filter-button">
+                  <span class="filter-text">Add filter</span>
+                  <img src="https://cdn.builder.io/api/v1/image/assets/d722985fb0864991959d993b9d3b339c/48749e1d3fff760626e8570f6429bae7f351f82179372f3f3fa30ae89781a3ec?apiKey=d722985fb0864991959d993b9d3b339c&" alt="" class="filter-icon" />
+                </button>
+
+                <div class="search-bar">
+                  <img src="https://cdn.builder.io/api/v1/image/assets/d722985fb0864991959d993b9d3b339c/560bc7292cb3c6d63a2635cd4b9304305e3c7582eabe5128a210cfc0b5a9df1c?apiKey=d722985fb0864991959d993b9d3b339c&" alt="" class="search-bar-icon" />
+                  <input type="text" class="search-bar-text" placeholder="Search for a Subject by name or Grade name" aria-label="Search for a Subject by name or Grade name" />
+                </div>
+              </div>
+
+              <div class="table-container">
+                <div class="table-header">
+                  <div class="table-header-cell">Instructor Name</div>
+                  <div class="table-header-cell">Subject Name</div>
+                  <div class="table-header-cell">Schedule (Days and Times)</div>
+                </div>
+                <div class="table-body">
+                  <div class="table-row">
+                    <div class="table-cell">Ana Lopez</div>
+                    <div class="table-cell">Diamond</div>
+                    <div class="table-cell">7am-8am</div>
+                  </div>
+                  <div class="table-row table-row-alt">
+                    <div class="table-cell table-cell-alt">Mark Garcia</div>
+                    <div class="table-cell table-cell-alt">Jade</div>
+                    <div class="table-cell table-cell-alt">9am-10am</div>
+                  </div>
+                  <div class="table-row">
+                    <div class="table-cell">Maria Santos</div>
+                    <div class="table-cell">Emerald</div>
+                    <div class="table-cell">10am-11am</div>
+                  </div>
+                  <div class="table-row table-row-alt">
+                    <div class="table-cell table-cell-alt">Amihan Cruz</div>
+                    <div class="table-cell table-cell-alt">Aqumarine</div>
+                    <div class="table-cell table-cell-alt">1pm-2pm</div>
+                  </div>
+                  <div class="table-row">
+                    <div class="table-cell">Jose Reyes</div>
+                    <div class="table-cell">Ruby</div>
+                    <div class="table-cell">2pm-3pm</div>
+                  </div>
+                  <div class="table-row table-row-alt">
+                    <div class="table-cell table-cell-alt">Bayani Delgado</div>
+                    <div class="table-cell table-cell-alt">Tupaz</div>
+                    <div class="table-cell table-cell-alt">4pm-5pm</div>
+                  </div>
+                </div>
+              </div>
+              <img src="https://cdn.builder.io/api/v1/image/assets/d722985fb0864991959d993b9d3b339c/e1d5702fd653e51cceaf6b9b4031afba7acc041b78313f083ec09e0f4eec023a?apiKey=d722985fb0864991959d993b9d3b339c&" alt="Decorative footer image" class="footer-image" />
+            </div>
+          </section>
+        </div>
+      </main>
+
+
+</body>
+</html>
+
+

@@ -1,0 +1,40 @@
+# Auto detect text files and perform LF normalization
+* text=auto eol=lf
+
+# Source code
+*.js    text diff=javascript
+*.jsx   text diff=javascript
+*.ts    text diff=typescript
+*.tsx   text diff=typescript
+*.vue   text diff=vue
+*.json  text
+*.html  text diff=html
+*.css   text diff=css
+*.scss  text diff=css
+*.sass  text diff=css
+
+# Documentation
+*.md    text diff=markdown
+*.txt   text
+*.yaml  text
+*.yml   text
+
+# Graphics
+*.png   binary
+*.jpg   binary
+*.gif   binary
+*.ico   binary
+*.svg   text
+
+# Fonts
+*.ttf   binary
+*.eot   binary
+*.woff  binary
+*.woff2 binary
+
+# Scripts
+*.sh    text eol=lf
+*.bat   text eol=crlf
+
+# RC files
+*.*rc   text
